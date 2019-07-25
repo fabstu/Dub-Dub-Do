@@ -36,7 +36,7 @@ class TodoStore: NSObject, BindableObject {
         return self.todos.filter { $0.isComplete }
     }
     
-    let didChange = PassthroughSubject<TodoStore, Never>()
+    let willChange = PassthroughSubject<TodoStore, Never>()
     
     // MARK: Object Lifecycle
     
@@ -103,6 +103,6 @@ class TodoStore: NSObject, BindableObject {
 // MARK: TodoStore + NSFetchedResultsControllerDelegate
 extension TodoStore: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        didChange.send(self)
+        willChange.send(self)
     }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0565777822E97766003104B2 /* CloudKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0565777722E97766003104B2 /* CloudKit.framework */; };
 		692A93BE22B18B390065C050 /* Todo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 692A93BD22B18B390065C050 /* Todo.swift */; };
 		69796D4422B19882006BC1C4 /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69796D4322B19882006BC1C4 /* TodoListView.swift */; };
 		69A4AE0D22AEFC1B006186F0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69A4AE0C22AEFC1B006186F0 /* AppDelegate.swift */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0565777522E9775C003104B2 /* DubDubDo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DubDubDo.entitlements; sourceTree = "<group>"; };
+		0565777722E97766003104B2 /* CloudKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CloudKit.framework; path = System/Library/Frameworks/CloudKit.framework; sourceTree = SDKROOT; };
 		692A93BD22B18B390065C050 /* Todo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Todo.swift; sourceTree = "<group>"; };
 		69796D4322B19882006BC1C4 /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
 		69A4AE0922AEFC1B006186F0 /* DubDubDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DubDubDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,12 +42,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0565777822E97766003104B2 /* CloudKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0565777622E97766003104B2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0565777722E97766003104B2 /* CloudKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		692A93BF22B1955C0065C050 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -85,6 +97,7 @@
 			children = (
 				69A4AE0B22AEFC1B006186F0 /* DubDubDo */,
 				69A4AE0A22AEFC1B006186F0 /* Products */,
+				0565777622E97766003104B2 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -99,6 +112,7 @@
 		69A4AE0B22AEFC1B006186F0 /* DubDubDo */ = {
 			isa = PBXGroup;
 			children = (
+				0565777522E9775C003104B2 /* DubDubDo.entitlements */,
 				69A4AE0C22AEFC1B006186F0 /* AppDelegate.swift */,
 				69A4AE0E22AEFC1B006186F0 /* SceneDelegate.swift */,
 				692A93C222B196B90065C050 /* Persistence */,
@@ -332,16 +346,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DubDubDo/DubDubDo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "DubDubDo/Preview\\ Content";
-				DEVELOPMENT_TEAM = LM8XNFK349;
+				DEVELOPMENT_TEAM = 23S9GPMLJ2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = DubDubDo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.StephenMcMillan.DubDubDo;
+				PRODUCT_BUNDLE_IDENTIFIER = de.aduu.crap.dubdubdo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -352,16 +367,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = DubDubDo/DubDubDo.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "DubDubDo/Preview\\ Content";
-				DEVELOPMENT_TEAM = LM8XNFK349;
+				DEVELOPMENT_TEAM = 23S9GPMLJ2;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = DubDubDo/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.StephenMcMillan.DubDubDo;
+				PRODUCT_BUNDLE_IDENTIFIER = de.aduu.crap.dubdubdo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
