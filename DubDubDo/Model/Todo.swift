@@ -1,7 +1,11 @@
 import CoreData
 import SwiftUI
 
-public class Todo: NSManagedObject {}
+public class Todo: NSManagedObject, Identifiable {
+    public var id: String {
+        return todoDescription
+    }
+}
 
 extension Todo {
     public class func fetchRequest() -> NSFetchRequest<Todo> {

@@ -22,37 +22,15 @@ struct TodoListView : View {
             List {
                 // The various cell types could be extracted.
                 Section(header: Text("Add")) {
-                    HStack {
-                        TextField($newTodo, placeholder: Text("Buy Groceries..."))
-                        
-                        if self.newTodo.myCount > 0 {
-                            Button(action: {
-                                self.todoStore.create(description: self.newTodo)
-                                self.newTodo = ""
-                            }) {
-                                Image(systemName: "plus.circle.fill").foregroundColor(Color.green).imageScale(.large)
-                            }.animation(.linear(duration: 4.0))
-                        }
-                    }
+                    AddView(newTodo: $newTodo)
                 }
                 
                 Section(header: Text("In Progress")) {
-                    ForEach(todoStore.inProgressTodos, id: \.todoDescription) { todo in
-                        Button(action: {
-                            self.selectedTodo = todo
-                            self.showingSheet = true
-                        }) {
-                            HStack {
-                                Text(todo.todoDescription).foregroundColor(.black)
-                                Spacer()
-                                todo.isImportant ? Image(systemName: "exclamationmark.triangle.fill").foregroundColor(Color.red).imageScale(.large) : nil
-                            }
-                        }
-                    }.onDelete(perform: self.todoStore.deleteInProgressTodo(at:))
+                    InProgressView(selectedTodo: $selectedTodo, showingSheet: $showingSheet)
                 }
                 
                 Section(header: Text("Completed")) {
-                    ForEach(todoStore.completedTodos, id: \.todoDescription) { todo in
+                    ForEach(todoStore.completedTodos) { todo in
                         Text(todo.todoDescription).strikethrough()
                     }.onDelete(perform: self.todoStore.deleteCompletedTodo(at:))
                 }
@@ -81,6 +59,65 @@ struct TodoListView : View {
                         ]
             )
         )
+    }
+}
+
+struct AddView: View {
+    @Binding var newTodo: String
+    @EnvironmentObject var todoStore: TodoStore
+    
+    var body: some View {
+        HStack {
+            TextField($newTodo, placeholder: Text("Buy Groceries..."))
+            
+            if self.$newTodo.wrappedValue.myCount > 0 {
+                Button(action: {
+                    self.todoStore.create(description: self.newTodo)
+                    self.newTodo = ""
+                }) {
+                    Image(systemName: "plus.circle.fill").foregroundColor(Color.green).imageScale(.large)
+                }.animation(.linear(duration: 0.2))
+            }
+        }
+    }
+}
+
+struct InProgressView: View {
+    @EnvironmentObject var store: TodoStore
+    
+    @Binding var selectedTodo: Todo?
+    @Binding var showingSheet: Bool
+    
+    var body: some View {
+        ForEach(store.inProgressTodos) { todo in
+            //Text(todo.todoDescription)
+            HStack{
+                TodoInProgressCell(todo: todo, selectedTodo: self.$selectedTodo, showingSheet: self.$showingSheet)
+            }
+        }.onDelete(perform: self.store.deleteInProgressTodo(at:))
+    }
+}
+
+
+struct TodoInProgressCell: View {
+    var todo: Todo
+    @Binding var selectedTodo: Todo?
+    @Binding var showingSheet: Bool
+    
+    @EnvironmentObject var todoStore: TodoStore
+    
+    var body: some View {
+        Button(action: {
+            self.selectedTodo = self.todo
+            self.showingSheet = true
+        }) {
+            HStack {
+                Text(todo.todoDescription).foregroundColor(.black)
+                
+                Spacer()
+                todo.isImportant ? Image(systemName: "exclamationmark.triangle.fill").foregroundColor(Color.red).imageScale(.large) : nil
+            }
+        }
     }
 }
 

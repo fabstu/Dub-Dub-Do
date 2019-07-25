@@ -9,6 +9,7 @@ class TodoStore: NSObject, BindableObject {
     private let persistenceManager = PersistenceManager()
     
     private lazy var fetchedResultsController: NSFetchedResultsController<Todo> = {
+        print("Creating frc")
         let fetchRequest: NSFetchRequest<Todo> = Todo.fetchRequest()
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "dateCreated", ascending: false)]
         
@@ -18,6 +19,7 @@ class TodoStore: NSObject, BindableObject {
             sectionNameKeyPath: nil,
             cacheName: nil)
         fetchedResultsControlelr.delegate = self
+        print("Returning frc")
         return fetchedResultsControlelr
     }()
     
@@ -31,6 +33,8 @@ class TodoStore: NSObject, BindableObject {
     public var inProgressTodos: [Todo] {
         return self.todos.filter { !$0.isComplete }
     }
+    
+    //public var inProgressTodos: [Todo] = []
     
     public var completedTodos: [Todo] {
         return self.todos.filter { $0.isComplete }
@@ -49,6 +53,7 @@ class TodoStore: NSObject, BindableObject {
     
     public func create(description: String) {
         Todo.create(description: description, in: persistenceManager.managedObjectContext)
+        print("Created new todo item")
         saveChanges()
     }
     
@@ -83,19 +88,21 @@ class TodoStore: NSObject, BindableObject {
     // MARK: Private Methods
     
     private func fetchTodos() {
+        print("Fetching todos")
         do {
             try fetchedResultsController.performFetch()
-            dump(fetchedResultsController.sections)
+            print("Sections count: \(fetchedResultsController.sections?.count ?? -1)")
         } catch {
-            fatalError()
+            fatalError("failed to fetch todos: \(error)")
         }
+        print("Fetching todos done")
     }
     
     private func saveChanges() {
         guard persistenceManager.managedObjectContext.hasChanges else { return }
         do {
             try persistenceManager.managedObjectContext.save()
-        } catch { fatalError() }
+        } catch { fatalError("failed to save chanegs: \(error)") }
     }
 }
 
@@ -103,6 +110,7 @@ class TodoStore: NSObject, BindableObject {
 // MARK: TodoStore + NSFetchedResultsControllerDelegate
 extension TodoStore: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
+        print("Controller did change content")
         willChange.send(self)
     }
 }
