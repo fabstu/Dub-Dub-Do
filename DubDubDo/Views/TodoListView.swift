@@ -39,26 +39,6 @@ struct TodoListView : View {
                 .navigationBarTitle(Text("Todos"))
                 .navigationBarItems(trailing: EditButton())
         }
-        .actionSheet($showingSheet,
-                     ActionSheet(
-                        title: Text("Todo Actions"),
-                        message: nil,
-                        buttons: [
-                            ActionSheet.Button.default(Text((self.selectedTodo?.isImportant ?? false) ? "Unflag" : "Flag")) {
-                                self.todoStore.toggleIsImportant(self.selectedTodo)
-                                self.showingSheet.toggle()
-                                
-                            }, ActionSheet.Button.default(Text("Mark as \((self.selectedTodo?.isComplete ?? false) ? "Incomplete" : "Complete")")) {
-                                
-                                self.todoStore.toggleIsComplete(self.selectedTodo)
-                                self.showingSheet.toggle()
-                                
-                            }, ActionSheet.Button.cancel({
-                                self.showingSheet.toggle()
-                            })
-                        ]
-            )
-        )
     }
 }
 
@@ -117,6 +97,26 @@ struct TodoInProgressCell: View {
                 Spacer()
                 todo.isImportant ? Image(systemName: "exclamationmark.triangle.fill").foregroundColor(Color.red).imageScale(.large) : nil
             }
+        }
+        .actionSheet(isPresented: $showingSheet) {
+            ActionSheet(
+                title: Text("Todo Actions"),
+                message: nil,
+                buttons: [
+                    ActionSheet.Button.default(Text((self.selectedTodo?.isImportant ?? false) ? "Unflag" : "Flag")) {
+                        self.todoStore.toggleIsImportant(self.selectedTodo)
+                        self.showingSheet.toggle()
+                        
+                    }, ActionSheet.Button.default(Text("Mark as \((self.selectedTodo?.isComplete ?? false) ? "Incomplete" : "Complete")")) {
+                        
+                        self.todoStore.toggleIsComplete(self.selectedTodo)
+                        self.showingSheet.toggle()
+                        
+                    }, ActionSheet.Button.cancel({
+                        self.showingSheet.toggle()
+                    })
+                ]
+            )
         }
     }
 }
